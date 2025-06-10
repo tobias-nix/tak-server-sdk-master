@@ -1,0 +1,119 @@
+apply plugin: 'java'
+sourceCompatibility = 11
+targetCompatibility = 11
+
+
+buildscript {
+
+  repositories {
+       mavenCentral()
+  }
+
+  dependencies {
+    classpath 'org.ajoberstar:grgit:1.7.2'
+  }
+}
+
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+ext {
+  // 
+  git = org.ajoberstar.grgit.Grgit.open(file('..'))
+  gitrev = git.head().id
+  gitdescribe = git.describe()
+  gitbranch = git.branch.getCurrent().name
+
+  def (tv, takrel1, takrel2) = gitdescribe.trim().tokenize('-')
+  
+  takversion = tv
+  takrelease = takrel1 + '-' + takrel2
+  takreleaserpm = takrel1 + takrel2
+
+  def (tvmaj, tvmin) = tv.tokenize('.')
+  
+  verMajor = tvmaj
+  verMinor = tvmin
+  verPatch = takrel2
+  commitHash = ('git rev-parse --short HEAD'.execute()).getText().trim()
+
+  // only show the branch name if it's not master or a maintenance branch
+  branch = (gitbranch == "master" || gitbranch.toLowerCase().contains("maintenance") ? "" : ("-" + gitbranch))
+}
+
+allprojects {
+
+  apply plugin: 'java'
+  apply plugin: 'eclipse'
+  apply plugin: 'idea'
+
+  version = takversion + '-' + takrelease
+
+  defaultTasks 'build'
+
+  test {
+    testLogging.showStandardStreams = true
+
+    // display logging output
+    onOutput { descriptor, event -> logger.lifecycle(event.message) }
+  }
+
+  repositories {
+    mavenCentral()
+    mavenLocal()
+    jcenter()
+  }
+}
+
+subprojects {
+
+  buildscript {
+    repositories {
+      gradlePluginPortal() 
+      mavenCentral()
+      jcenter()
+    }
+
+    dependencies {
+      classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+    }
+  }
+
+  dependencies {
+    testImplementation group: 'junit', name: 'junit', version: junit_version
+    testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: logback_version
+    testImplementation 'org.mockito:mockito-core:4.8.1'
+
+    implementation 'org.slf4j:slf4j-api:2.0.13'
+  }
+
+  sourceSets {
+    main {
+        resources {
+            srcDirs "$buildDir/resources"
+        }
+    }
+  }
+
+  clean {
+    delete 'bin/'
+  }
+
+  task writeVerFile() {
+      doFirst {
+        mkdir "$buildDir/resources"
+        
+        new File("$buildDir/resources/ver.json").text = """
+  {
+    "major" : $verMajor,
+    "minor" : $verMinor,
+    "patch" : 0,
+    "hash" : "$commitHash",
+    "branch" : "$gitbranch"
+  }
+        """
+     }
+  }
+
+  compileJava.finalizedBy writeVerFile
+}

@@ -1,0 +1,15 @@
+rootProject.name = 'takserver-sdk'
+
+include 'takserver-sender-plugin-sample'
+include 'takserver-sender-plugin-sample-http'
+include 'takserver-receiver-plugin-sample'
+include 'takserver-sender-receiver-message-forwarder-plugin-sample'
+include 'takserver-sender-receiver-periodic-logging-plugin-sample'
+include 'takserver-interceptor-message-counter-sample'
+include 'takserver-interceptor-random-uid-injector-sample'
+include 'takserver-submit-data-plugin-sample'
+include 'takserver-sender-plugin-datafeed'
+include 'takserver-sender-plugin-mission'
+include 'takserver-file-plugin-sample'
+include 'takserver-kafka-plugin'
+

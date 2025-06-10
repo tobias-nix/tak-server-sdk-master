@@ -1,0 +1,24 @@
+
+repositories {
+  maven {
+    url = 'https://artifacts.tak.gov/artifactory/maven'
+    credentials {
+      username = "$takGovUser"
+      password = "$takGovPassword"
+    }
+  }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+// support building a single jar that contains plugin code and also dependencies
+shadowJar { }
+
+dependencies {
+  // add additional depenencies as required for your TAK Server plugin
+  implementation group: 'gov.tak', name: 'takserver-plugins', version: takserver_plugins_version, classifier: 'all'
+
+  implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: '5.0'
+}
+
+

@@ -1,0 +1,12 @@
+http:
+  targets:
+    - "httpbin.org":
+        uris:
+          - "/"
+          - "/ip"
+          - "/user-agent"
+          - "headers"
+
+interval: 2000 # milliseconds
+groups:
+   - "__ANON__"

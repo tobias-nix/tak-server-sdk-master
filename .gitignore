@@ -1,0 +1,4 @@
+/.gradle/
+/*.project
+src/main/resources/ver.txt
+**/.DS_Store
