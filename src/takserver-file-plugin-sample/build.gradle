@@ -3,13 +3,15 @@ sourceCompatibility = 11
 targetCompatibility = 11
 
 repositories {
-   maven {
-    url = 'https://artifacts.tak.gov/artifactory/maven'
-    credentials {
-      username = "$takGovUser"
-      password = "$takGovPassword"
-    }
-  }
+  // maven {
+  //  url = 'https://artifacts.tak.gov/artifactory/maven'
+  //  credentials {
+  //    username = "$takGovUser"
+  //    password = "$takGovPassword"
+  //  }
+  //}
+  mavenLocal()
+  mavenCentral()
 //    flatDir {
 //      dirs '../lib'
 //    }

@@ -1,13 +1,15 @@
 
 
 repositories {
-  maven {
-    url = 'https://artifacts.tak.gov/artifactory/maven'
-    credentials {
-      username = "$takGovUser"
-      password = "$takGovPassword"
-    }
-  }
+  //maven {
+  //  url = 'https://artifacts.tak.gov/artifactory/maven'
+  //  credentials {
+  //    username = "$takGovUser"
+  //    password = "$takGovPassword"
+  //  }
+  //}
+  mavenLocal()
+  mavenCentral()
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'

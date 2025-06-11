@@ -85,6 +85,7 @@ subprojects {
     testImplementation 'org.mockito:mockito-core:4.8.1'
 
     implementation 'org.slf4j:slf4j-api:2.0.13'
+    implementation "gov.tak:takserver-plugins:5.4-release-49:all"
   }
 
   sourceSets {
