@@ -24,8 +24,7 @@ repositories {
 dependencies {
     // TAK Server plugin dependencies
     compileOnly files("${rootDir}/lib/takserver-plugin-api.jar")
-    compileOnly 'com.bbn:tak-tls:4.10'
-    compileOnly 'com.bbn:tak-protobuf:4.10'
+    implementation files('/home/takPlugin/Documents/tak-server-sdk-5.4/tak-server-sdk-5.4/takserver-plugins-5.4-release-49-all.jar')
 
     // XMPP client
     implementation 'org.igniterealtime.smack:smack-java8:4.4.6'
