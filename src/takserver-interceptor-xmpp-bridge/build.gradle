@@ -1,0 +1,67 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' // version is managed in settings.gradle
+}
+
+group = 'tak.server.plugins'
+version = '1.0.0-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    //maven {
+    //    url "https://artifacts.tak.gov/repository/maven-releases/"
+    //    credentials {
+    //        username takGovUser
+    //        password takGovPassword
+    //    }
+    //}
+}
+
+dependencies {
+    // TAK Server plugin dependencies
+    compileOnly files("${rootDir}/lib/takserver-plugin-api.jar")
+    compileOnly 'com.bbn:tak-tls:4.10'
+    compileOnly 'com.bbn:tak-protobuf:4.10'
+
+    // XMPP client
+    implementation 'org.igniterealtime.smack:smack-java8:4.4.6'
+    implementation 'org.igniterealtime.smack:smack-tcp:4.4.6'
+    implementation 'org.igniterealtime.smack:smack-im:4.4.6'
+    implementation 'org.igniterealtime.smack:smack-extensions:4.4.6'
+    implementation 'org.igniterealtime.smack:smack-resolver-dnsjava:4.4.6'
+
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.5'
+}
+
+// Update the shadowJar block for Shadow 7.x compatibility
+shadowJar {
+    archiveBaseName.set('takserver-interceptor-xmpp-bridge')
+    archiveVersion.set(version)
+
+    // merge all META-INF/services files
+    mergeServiceFiles()  
+
+    // exclude SDK internals
+    dependencies {
+        exclude(dependency('com.bbn:.*'))
+    }
+
+    // relocate XMPP libs to avoid conflicts
+    relocate 'org.jivesoftware',   'shadow.org.jivesoftware'
+    relocate 'org.jxmpp',          'shadow.org.jxmpp'
+    relocate 'org.minidns',        'shadow.org.minidns'
+    relocate 'org.xmlpull',        'shadow.org.xmlpull'
+}
+
+build {
+    dependsOn shadowJar
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

@@ -1,3 +1,0 @@
-kafkaHost: 192.168.140.235:9092
-kafkaConsumerTopic: tak-sub
-kafkaProducerTopic: tak-pub

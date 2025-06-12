@@ -1,0 +1,16 @@
+# XMPP Server Configuration
+xmppHost: "xmpp.example.com"
+xmppPort: 5222
+xmppUser: "takplugin"
+xmppPassword: "password"
+xmppRecipient: "target@xmpp.example.com"
+
+# Security Options
+useTls: false
+ignoreCertErrors: false
+
+# Logging Options
+logChatContents: false
+
+# Neuer Parameter für den Interface User
+interfaceUser: "ATAKInterface"

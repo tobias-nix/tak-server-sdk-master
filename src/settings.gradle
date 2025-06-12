@@ -1,3 +1,12 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    plugins {
+        id 'com.github.johnrengelman.shadow' version '7.1.2'
+    }
+}
 rootProject.name = 'takserver-sdk'
 
 include 'takserver-sender-plugin-sample'
@@ -12,4 +21,5 @@ include 'takserver-sender-plugin-datafeed'
 include 'takserver-sender-plugin-mission'
 include 'takserver-file-plugin-sample'
 include 'takserver-kafka-plugin'
+include 'takserver-interceptor-xmpp-bridge'
 

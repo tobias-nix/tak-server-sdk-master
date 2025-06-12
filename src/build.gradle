@@ -67,17 +67,16 @@ allprojects {
 
 subprojects {
 
-  buildscript {
-    repositories {
-      gradlePluginPortal() 
-      mavenCentral()
-      jcenter()
-    }
-
-    dependencies {
-      classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
-    }
-  }
+  //buildscript {
+  //  repositories {
+  //    gradlePluginPortal() 
+  //    mavenCentral()
+  //    jcenter()
+  //  }
+  //  dependencies {
+  //    classpath 'com.github.jengelman.gradle.plugins:shadow:7.1.2'
+  //  }
+  //}
 
   dependencies {
     testImplementation group: 'junit', name: 'junit', version: junit_version
